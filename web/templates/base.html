@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Online Store</title>
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+    <header class="">
+        <div class="container-fluid">
+            <div class="header-top">
+                <a href=""><button class="header-top__top-btn header-top__btn-signin">Sign in</button></a>
+                <h1>Online Store</h1>
+                <a href=""><button class="header-top__top-btn header-top__btn-cart">Cart</button></a>
+            </div>
+            {% include "components/navbar.html" %}
+        </div>
+       
+        <main>
+            <div class="container-fluid">
+                <div class="wrapper">
+                    <div class="row">
+                        {% block content %}
+                            
+                        {% endblock content %}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </main>
+    </header>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/carusel.js' %}"></script>
+</body>
+</html>
