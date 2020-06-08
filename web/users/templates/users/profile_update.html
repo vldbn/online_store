@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Update - {{ request.user.username }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-3">
+        {% include "components/_sidebar.html" %}
+    </div>
+    <div class="col-9">
+        <div class="wrapper-user__profile">
+            <div class="profile-header">
+                <h2>Profile</h2>
+                <div class="profile-header__update">
+                    <a class="edite-link" href="{% url 'users:update-profile' %}">Update profile</a>
+                    <a class="edite-link" href="{% url 'users:update-password' %}">Update password</a>
+                </div>
+            </div>
+            <hr>
+            <form class="update-form" method="POST">
+                {% csrf_token %}
+                <div class="update-form__input-wrapper">
+                    {{ user_form.first_name }}
+                </div>
+                <div class="update-form__input-wrapper">
+                    {{ user_form.last_name }}
+                </div>
+                <div class="update-form__input-wrapper">
+                    {{ user_form.email }}
+                </div>
+                
+                <div class="update-form__input-wrapper">
+                    {{ profile_form.birth_date }}
+                </div>
+                <div class="update-form__input-wrapper">
+                    {{ profile_form.address }}
+                </div>
+                <div class="update-form__input-wrapper">
+                    {{ profile_form.biography }}
+                </div>
+                <button class="update-form__btn">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

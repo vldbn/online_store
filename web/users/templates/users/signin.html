@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+Signin
+{% endblock title %}
+{% block content %}
+<div class="wrapper-user__auth">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="auth-messages">
+        <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <form class="auth-form" method="POST">
+        {% csrf_token %}
+        <div class="auth-form__input-wrapper">
+            {{ form.username }}
+        </div>
+        <div class="auth-form__input-wrapper">
+            {{ form.password }}
+        </div>
+        <button type="submit" class="auth-btn">Sign in</button>
+    </form>
+</div>
+{% endblock content %}

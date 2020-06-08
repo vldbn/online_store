@@ -4,34 +4,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Online Store</title>
+    <title>
+        {% block title %}
+        Online Store
+        {% endblock title %}
+    </title>
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %} ">
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap&subset=cyrillic-ext" rel="stylesheet">
 </head>
 
 <body>
     <header class="">
         <div class="container-fluid">
             <div class="header-top">
-                <a href=""><button class="header-top__top-btn header-top__btn-signin">Sign in</button></a>
+                {% if user.is_authenticated %}
+                 <a class="header-top__auth-link link-logout" href="{% url 'users:logout' %}">Logout</a>
+                {% else %}
+                <a class="header-top__auth-link link-sign" href="{% url 'users:signin' %}">Sign in</a>
+                {% endif %}
                 <h1>Online Store</h1>
-                <a href=""><button class="header-top__top-btn header-top__btn-cart">Cart</button></a>
+                {% if user.is_authenticated %}
+                <a class="header-top__auth-link link-cart" href="">Cart</a>
+                {% else %}
+                <a class="header-top__auth-link link-sign" href="{% url 'users:signup' %}">Sign up</a>
+                {% endif %}
             </div>
-            {% include "components/navbar.html" %}
+            {% include "components/_navbar.html" %}
         </div>
-       
         <main>
             <div class="container-fluid">
                 <div class="wrapper">
-                    <div class="row">
-                        {% block content %}
-                            
-                        {% endblock content %}
-                    </div>
+                    {% block content %}
+                    {% endblock content %}
                 </div>
-                </div>
+            </div>
             </div>
         </main>
     </header>
@@ -39,4 +48,5 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/carusel.js' %}"></script>
 </body>
+
 </html>

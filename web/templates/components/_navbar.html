@@ -45,6 +45,7 @@
         </div>
         <div class="header-nav__select-item">
             <!-- dropdown nav -->
+            {% if user.is_authenticated %}
             <div class="nav-dropdown">
                 <a href="#" class="nav-dropdown__title">
                     Profile
@@ -55,17 +56,18 @@
                     </div>
                 </a>
                 <div class="nav-dropdown__dropdown">
-                    <a href="#" class="nav-dropdown__dropdown-item">
-                        USD
+                    <a href="{% url 'users:profile' %}" class="nav-dropdown__dropdown-item">
+                        My Profile
                     </a>
                     <a href="#" class="nav-dropdown__dropdown-item">
-                        RUR
+                        My Orders
                     </a>
                     <a href="#" class="nav-dropdown__dropdown-item">
                         UAH
                     </a>
                 </div>
             </div>
+            {% endif %}
             <!-- // dropdown nav -->
         </div>
 </nav>

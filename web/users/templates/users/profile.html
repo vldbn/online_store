@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}
+Profile - {{ request.user.username }}
+{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-3">
+        {% include "components/_sidebar.html" %}
+    </div>
+    <div class="col-9">
+        <div class="wrapper-user__profile">
+            <div class="profile-header">
+                <h2>Profile</h2>
+                <div class="profile-header__update">
+                    <a class="edite-link" href="{% url 'users:update-profile' %}">Update profile</a>
+                    <a class="edite-link" href="{% url 'users:update-password' %}">Update password</a>
+                </div>
+            </div>
+            <hr>
+            <div class="profile-body">
+                <div class="profile-body__content">
+                    <h3>Username:</h3>
+                    <p>{{ user.username }}</p>
+                </div>
+                <div class="profile-body__content">
+                    <h3>First name:</h3>
+                    <p>{{ user.first_name }}</p>
+                </div>
+                <div class="profile-body__content">
+                    <h3>Last name:</h3>
+                    <p>{{ user.last_name }}</p>
+                </div>
+                <div class="profile-body__content">
+                    <h3>Email:</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+                <div class="profile-body__content">
+                    <h3>Birth date:</h3>
+                    <p>{{ user.profile.birth_date }}</p>
+                </div>
+                <div class="profile-body__content">
+                    <h3>Address:</h3>
+                    <p>{{ user.profile.address }}</p>
+                </div>
+                <div class="profile-body__content">
+                    <h3>Biography:</h3>
+                    <p>{{ user.profile.biography }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
