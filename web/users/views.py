@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from store.models import Category
 from django.views import View
 from users import forms
 
@@ -13,10 +14,11 @@ class ProfileView(LoginRequiredMixin, View):
     """Profile view"""
 
     def get(self, request):
-        # TODO add all categories
         user = User.objects.get(username=request.user)
+        categories = Category.objects.all()
         context = {
-            'user': user
+            'user': user,
+            'categories':categories
         }
         return render(request, 'users/profile.html', context)
 
@@ -25,20 +27,21 @@ class ProfileUpdateView(LoginRequiredMixin, View):
     """Profile update view."""
 
     def get(self, request):
-        # TODO add all categories
         user = User.objects.get(username=request.user.username)
         user_form = forms.UserForm(instance=user)
-        profile_form = forms.ProfileForm(instance=user.profile)
+        profile_form = forms.ProfileForm(instance=user.profile_url)
+        categories = Category.objects.all()
         context = {
             'user_form': user_form,
-            'profile_form': profile_form
+            'profile_form': profile_form,
+            'categories': categories
         }
         return render(request, 'users/profile_update.html', context)
 
     def post(self, request):
         user = User.objects.get(username=request.user.username)
         user_form = forms.UserForm(request.POST, instance=user)
-        profile_form = forms.ProfileForm(request.POST, instance=user.profile)
+        profile_form = forms.ProfileForm(request.POST, instance=user.profile_url)
 
         if user_form.is_valid() or profile_form.is_valid():
             user_form.save()
@@ -79,8 +82,7 @@ class SigninView(View):
 
     def get(self, request):
         if request.user.is_authenticated:
-            #TODO change redirect destination, when add Products.
-            return redirect('home')
+            return redirect('store:productlist')
 
         form = forms.SigninForm()
         context = {
@@ -101,8 +103,7 @@ class SigninView(View):
                 return redirect('users:signin')
             else:
                 login(request, user)
-                # TODO change redirect destination, when add Products.
-                return redirect('home')
+                return redirect('store:productlist')
 
 
 class SignupView(View):
@@ -110,8 +111,7 @@ class SignupView(View):
 
     def get(self, request):
         if request.user.is_authenticated:
-            # TODO change redirect destination, when add Products.
-            return redirect('home')
+            return redirect('store:productlist')
 
         form = forms.SignupForm()
         context = {

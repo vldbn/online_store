@@ -44,7 +44,12 @@ body {
   padding-right: 10%;
 }
 
-.navigation {
+.link-lwc {
+  text-transform: none;
+  color: #595b5e;
+}
+
+.navigation, .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
   background-color: #ffffff;
@@ -302,14 +307,6 @@ a.nav-dropdown__dropdown-item:hover {
   margin-bottom: 15px;
 }
 
-/**
- * Owl Carousel v2.3.4
- * Copyright 2013-2018 David Deutsch
- * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
- */
-/*
- *  Default theme - Owl Carousel CSS File
- */
 .owl-theme .owl-nav {
   margin-top: 10px;
   text-align: center;
@@ -643,4 +640,230 @@ a.nav-dropdown__dropdown-item:hover {
   margin-right: auto;
   text-align: center;
   max-width: 30%;
+}
+
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cards-wrapper > * {
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+
+.card {
+  padding: 20px;
+  width: 255px;
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.card__sale {
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  padding: 6px 10px;
+  color: #b3b3b3;
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.card__icon-btns {
+  display: flex;
+  align-items: center;
+}
+
+.card__icon-btn {
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.card__icon-btn svg {
+  fill: #d8d6d6;
+}
+
+.card__icon-btn:hover svg {
+  fill: #1875f0;
+}
+
+.card__icon-btn + .card__icon-btn {
+  margin-left: 25px;
+}
+
+.card__img {
+  height: 160px;
+  margin-bottom: 54px;
+  text-align: center;
+}
+
+.card__img > img {
+  width: 100%;
+}
+
+.card__title {
+  margin-bottom: 25px;
+  color: #666666;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  text-align: center;
+}
+
+.card__rating {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 29px;
+}
+
+.card__rating > * + * {
+  margin-left: 4px;
+}
+
+.card__rating-value {
+  margin-left: 16px;
+  color: #b3b3b3;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.67;
+  letter-spacing: 0.12px;
+}
+
+.card__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.card__price {
+  color: #666666;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: 0.16px;
+}
+
+.card__cart {
+  margin-left: 17px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.card__cart svg {
+  fill: #e6e4e4;
+}
+
+.card__cart:hover svg {
+  fill: #1875f0;
+}
+
+.card-detail-wrapper {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #f5f5f5;
+  border-radius: 10px;
+  max-width: 100%;
+  padding: 20px;
+  margin-top: 0px;
+  background-color: #fff;
+  color: #808080;
+}
+
+.card-detail__img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 350px;
+  max-height: 350px;
+}
+
+.card-detail__img > img {
+  width: 100%;
+  height: 100%;
+}
+
+.card-detail__title {
+  margin-bottom: 5px;
+  color: #666666;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  text-align: center;
+}
+
+.card-detail__rating {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 29px;
+}
+
+.card-detail__rating > * + * {
+  margin-left: 4px;
+}
+
+.card-detail__price {
+  color: #666666;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: 0.16px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.card-detail__description {
+  text-align: justify;
+}
+
+.pagination {
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.pagination a {
+  text-decoration: none;
+}
+
+.pagination-number {
+  padding: 9px 15px 9px 15px;
+  border-radius: 2px;
+  color: #0B3948;
+  background-color: #fff;
+}
+
+.pagination-current {
+  background-color: #ACB0BD;
+}
+
+.pagination-number:hover {
+  background-color: #ACB0BD;
+  color: #0B3948;
+}
+
+.pagination-action {
+  margin: 0px;
+  display: inline-block;
+  padding: 5px;
+  padding-bottom: 0;
+  color: #ACB0BD;
+  font-size: 25px;
+}
+
+.pagination-action:hover,
+.pagination-previous,
+.pagination-next {
+  color: #595b5e;
 }

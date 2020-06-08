@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-3">
+        {% include "components/_sidebar.html" %}
+    </div>
+    <div class="col-9">
+        <div class="card-detail-wrapper">
+            <div class="card-detail">
+                <div class="card-detail__img">
+                    <img src=" 
+                    {% if product.image %}
+                    {{ product.image.url }}
+                    {% else %}
+                    {% static 'icons/no-image.png' %}
+                    {% endif %} " alt="">
+                </div>
+                <div class="card-detail__title">
+                    <h4>{{ product.name }}</h4>
+                </div>
+                <div class="card-detail__price">
+                    <h4>$ {{ product.price }}</h4>
+                </div>
+                <div class="card-detail__rating">
+                    <img class="card__rating-star" src="{% static 'icons/star_icon.svg' %}" alt="" />
+                    <img class="card__rating-star" src="{% static 'icons/star_icon.svg' %}" alt="" />
+                    <img class="card__rating-star" src="{% static 'icons/star_icon.svg' %}" alt="" />
+                    <img class="card__rating-star" src="{% static 'icons/star_half_icon.svg' %}" alt="" />
+                    <img class="card__rating-star" src="{% static 'icons/star_border_icon.svg' %}" alt="" />
+                    <div class="card__rating-value">12</div>
+                </div>
+                <div class="card-detail__description">
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

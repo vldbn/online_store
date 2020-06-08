@@ -7,7 +7,6 @@ from web.views import temp_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # TODO Delete home view, when add Products home view.
-    path('', temp_view, name='home'),
+    path('', include('store.urls', namespace='store')),
     path('users/', include('users.urls',namespace='users'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
