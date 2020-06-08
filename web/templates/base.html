@@ -27,7 +27,13 @@
                 {% endif %}
                 <h1>Online Store</h1>
                 {% if user.is_authenticated %}
-                <a class="header-top__auth-link link-cart" href="">Cart</a>
+                <a class="header-top__auth-link link-cart 
+                {% with total_items=cart|length %} 
+                {% if cart|length > 0 %}
+                cart
+                {% endif %}
+                {% endwith %}
+                " href="{% url 'cart:detail' %}">Cart</a>
                 {% else %}
                 <a class="header-top__auth-link link-sign" href="{% url 'users:signup' %}">Sign up</a>
                 {% endif %}

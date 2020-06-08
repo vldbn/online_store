@@ -29,7 +29,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(username=request.user.username)
         user_form = forms.UserForm(instance=user)
-        profile_form = forms.ProfileForm(instance=user.profile_url)
+        profile_form = forms.ProfileForm(instance=user.profile)
         categories = Category.objects.all()
         context = {
             'user_form': user_form,
@@ -41,7 +41,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
     def post(self, request):
         user = User.objects.get(username=request.user.username)
         user_form = forms.UserForm(request.POST, instance=user)
-        profile_form = forms.ProfileForm(request.POST, instance=user.profile_url)
+        profile_form = forms.ProfileForm(request.POST, instance=user.profile)
 
         if user_form.is_valid() or profile_form.is_valid():
             user_form.save()
