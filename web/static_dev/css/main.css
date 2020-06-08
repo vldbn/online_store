@@ -835,6 +835,29 @@ a.nav-dropdown__dropdown-item:hover {
   text-align: justify;
 }
 
+.card-detail__cart-form {
+  max-width: 190px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+}
+
+.card-form__input-btn {
+  height: 35px;
+  background-color: #fff;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border: 2px solid #f5f5f5;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #808080;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .pagination {
   display: block;
   text-align: center;

@@ -35,9 +35,11 @@
                     <img class="card__rating-star" src="{% static 'icons/star_border_icon.svg' %}" alt="" />
                     <div class="card__rating-value">12</div>
                 </div>
-                <div class="cart-detail__add">
-                    <form action="">
+                <div class="card-detail__cart-form">
+                    <form method="POST" action="{% url 'cart:add' product_id=product.id %}">
+                        {% csrf_token %}
                         {{ form }}
+                        <button class="card-form__input-btn">To cart</button>
                     </form>
                 </div>
                 <div class="card-detail__description">

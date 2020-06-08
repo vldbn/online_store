@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.decorators.http import require_POST
@@ -25,6 +26,7 @@ class CartView(LoginRequiredMixin, View):
 
 
 @require_POST
+@login_required
 def cart_add(request, product_id):
     """Add item into a cart."""
 
@@ -39,6 +41,8 @@ def cart_add(request, product_id):
         return redirect('cart:detail')
 
 
+@require_POST
+@login_required
 def cart_add_quick(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -53,6 +57,7 @@ def cart_add_quick(request, product_id):
         return redirect(previous_page)
 
 
+@login_required
 def cart_remove(request, product_id):
     """Remove item from a cart."""
 
