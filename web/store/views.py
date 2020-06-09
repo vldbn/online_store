@@ -10,7 +10,7 @@ class ProductListView(View):
 
     def get(self, request):
         categories = Category.objects.all()
-        product_list = Product.objects.all()
+        product_list = Product.objects.filter(available=True)
         paginator = Paginator(product_list, 6)
         page = request.GET.get('page')
 
@@ -36,6 +36,7 @@ class ProductCategoryListView(View):
         categories = Category.objects.all()
         category = get_object_or_404(Category, slug=slug)
         product_list = Product.objects.filter(category=category)
+        product_list = product_list.filter(available=True)
         paginator = Paginator(product_list, 6)
         page = request.GET.get('page')
 
@@ -66,6 +67,6 @@ class ProductDetailView(View):
         context = {
             'product': product,
             'categories': categories,
-            'form':form
+            'form': form
         }
         return render(request, 'store/product_detail.html', context)
