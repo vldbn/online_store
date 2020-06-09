@@ -34,10 +34,11 @@ class URLsTest(TestCase):
         self.assertEqual(res.status_code, 404)
 
     def test_get_order_order_detail_page_without_auth(self):
-        res = self.client.get(self.orderlist_url, follow=True)
+        res = self.client.get(self.order_detail_url.format(self.order.id),
+                              follow=True)
         self.assertEqual(res.status_code, 404)
 
     def test_get_order_orderlist_page_with_auth(self):
         self.client.login(username=self.username, password=self.password)
-        res = self.client.get(self.orderlist_url)
+        res = self.client.get(self.order_detail_url.format(self.order.id))
         self.assertEqual(res.status_code, 200)
