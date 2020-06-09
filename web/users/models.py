@@ -9,7 +9,9 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(null=True, blank=True)
-    address = models.CharField(max_length=30, blank=True)
+    address = models.CharField(max_length=100, default='')
+    postal_code = models.CharField(max_length=20, default='')
+    city = models.CharField(max_length=100, default='')
     biography = models.TextField(max_length=500, blank=True)
 
 

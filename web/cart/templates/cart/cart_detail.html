@@ -63,7 +63,7 @@ Cart
                 </table>
                 <p class="text-right">
                     <a href="{% url  'store:productlist' %}" class="cart-link cart-link__continue">Continue shopping</a>
-                    <a href="#" class="cart-link cart-link__checkout">Checkout</a> </p>
+                    <a href="{% url 'orders:create' %}" class="cart-link cart-link__checkout">Checkout</a> </p>
             </div>
         </div>
     </div>

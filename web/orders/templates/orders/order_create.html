@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+Checkout
+{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-3">
+        {% include "components/_sidebar.html" %}
+    </div>
+    <div class="col-9">
+        <div class="wrapper-order">
+            <div class="order-header">
+                <h2>Checkout</h2>
+            </div>
+            <hr>
+            <div class="order-body">
+                <form class="order-update-form" method="POST">
+                    {% csrf_token %}
+                    <div class="order-update-form__input-wrapper">
+                        {{ user_form.first_name }}
+                    </div>
+                    <div class="order-update-form__input-wrapper">
+                        {{ user_form.last_name }}
+                    </div>
+                    <div class="order-update-form__input-wrapper">
+                        {{ user_form.email }}
+                    </div>
+                    <div class="order-update-form__input-wrapper">
+                        {{ profile_form.address }}
+                    </div>
+                    <div class="order-update-form__input-wrapper">
+                        {{ profile_form.postal_code }}
+                    </div>
+                    <div class="order-update-form__input-wrapper">
+                        {{ profile_form.city }}
+                    </div>
+                    <button class="order-update-form__btn">Order</button>
+                </form>
+                <div class="order-body__order">
+                    <h3>Your order:</h3>
+                    <ul>
+                        {% for item in cart %}
+                        <li>
+                            {{ item.quantity }} x {{ item.product.name }}
+                            <span>${{ item.total_price }}</span>
+                        </li>
+                        {% endfor %} </ul>
+                    <p><b>Total:</b> $ {{ cart.get_total_price }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+    Order was created.
+{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="col-3">
+            {% include "components/_sidebar.html" %}
+        </div>
+        <div class="col-9">
+            <div class="wrapper-order">
+            <div class="order-header">
+                <h2>Checkout</h2>
+            </div>
+            <hr>
+            <div class="order-created-body">
+                <div class="order-body__order-created">
+                    <h1>Thank you</h1>
+                    <p>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong>.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock content %}

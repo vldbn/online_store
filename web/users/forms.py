@@ -50,27 +50,28 @@ class SignupForm(forms.Form):
 
 class UserForm(forms.ModelForm):
     """User update form."""
+
     first_name = forms.CharField(max_length=50, label='',
                                  widget=forms.TextInput(
                                      attrs={
                                          'placeholder': 'First name',
                                          'class': 'update-form__input'
                                      }
-                                 ), required=False)
+                                 ))
     last_name = forms.CharField(max_length=50, label='',
                                 widget=forms.TextInput(
                                     attrs={
                                         'placeholder': 'Last name',
                                         'class': 'update-form__input'
                                     }
-                                ), required=False)
+                                ))
     email = forms.CharField(max_length=50, label='',
                             widget=forms.EmailInput(
                                 attrs={
                                     'placeholder': 'Email',
                                     'class': 'update-form__input'
                                 }
-                            ), required=False)
+                            ))
 
     class Meta:
         model = User
@@ -79,6 +80,7 @@ class UserForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     """Profile update form."""
+
     birth_date = forms.DateField(label='',
                                  widget=forms.DateInput(
                                      attrs={
@@ -87,13 +89,27 @@ class ProfileForm(forms.ModelForm):
                                          'placeholder': 'Birth date yyyy-dd-mm'
                                      }
                                  ), required=False)
-    address = forms.CharField(max_length=50, label='',
+    address = forms.CharField(max_length=100, label='',
                               widget=forms.TextInput(
                                   attrs={
                                       'placeholder': 'Address',
                                       'class': 'update-form__input'
                                   }
-                              ), required=False)
+                              ))
+    postal_code = forms.CharField(max_length=20, label='',
+                                  widget=forms.TextInput(
+                                      attrs={
+                                          'placeholder': 'Postal code',
+                                          'class': 'update-form__input'
+                                      }
+                                  ))
+    city = forms.CharField(max_length=100, label='',
+                           widget=forms.TextInput(
+                               attrs={
+                                   'placeholder': 'City',
+                                   'class': 'update-form__input'
+                               }
+                           ))
     biography = forms.CharField(max_length=50, label='',
                                 widget=forms.Textarea(
                                     attrs={
@@ -104,7 +120,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['birth_date', 'address', 'biography']
+        fields = ['birth_date', 'address', 'postal_code', 'city', 'biography']
 
 
 class PasswordForm(forms.Form):
