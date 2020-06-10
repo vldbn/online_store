@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from orders.models import Order
+from payments.tasks import send_pdf
 
 
 class PaymentProcessView(LoginRequiredMixin, View):
@@ -37,6 +38,7 @@ class PaymentProcessView(LoginRequiredMixin, View):
             order.paid = True
             order.braintree_id = result.transaction.id
             order.save()
+            send_pdf.delay(order_id)
             return redirect('payments:done')
         else:
             return redirect('payments:canceled')

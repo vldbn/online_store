@@ -1,8 +1,12 @@
+import weasyprint
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse
 from cart.cart import Cart
 from store.models import Category
@@ -45,7 +49,7 @@ class CreateOrderView(LoginRequiredMixin, View):
                 )
             cart.clear()
             # TODO uncomment email sending
-            # order_created.delay(order.id)
+            order_created.delay(order.id)
             request.session['order_id'] = order.id
 
             return redirect(reverse('payments:process'))
@@ -82,9 +86,34 @@ class OrderDetailView(LoginRequiredMixin, View):
 
 @staff_member_required
 def admin_order_detail(request, id):
+    """Display order detail view in admin panel."""
+
     order = get_object_or_404(Order, id=id)
     context = {
         'order': order
     }
     return render(request, 'admin/orders/admin_order_detail.html',
                   context)
+
+
+@staff_member_required
+def admin_order_to_pdf(request, id):
+    """Export order to pdf using orders/pdf.html template and
+    css styles for it from pdf.css. CSS directory depends on
+    debug const in settings.py."""
+
+    if settings.DEBUG:
+        css = settings.STATICFILES_DIR + '/css/pdf.css'
+    else:
+        css = settings.STATIC_ROOT + '/css/pdf.css'
+
+    order = get_object_or_404(Order, id=id)
+    context = {
+        'order': order
+    }
+    html = render_to_string('orders/pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}.pdf'
+    weasyprint.HTML(string=html).write_pdf(response, stylesheets=[css])
+
+    return response

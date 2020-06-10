@@ -15,7 +15,15 @@ def order_detail(obj):
 order_detail.short_description = 'Order detail'
 
 
-def export_to_csv(modelAdmin, request, queryset):
+def export_order_to_pdf(obj):
+    return mark_safe('<a href="{}">PDF</a>'.format(
+        reverse('orders:admin_order_pdf', args=[obj.id])))
+
+
+export_order_to_pdf.short_description = 'Export to pdf'
+
+
+def export_orders_to_csv(modelAdmin, request, queryset):
     opts = modelAdmin.model._meta
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment;' \
@@ -38,7 +46,7 @@ def export_to_csv(modelAdmin, request, queryset):
     return response
 
 
-export_to_csv.short_description = 'Export to CSV'
+export_orders_to_csv.short_description = 'Export to CSV'
 
 
 class OrderItemInline(admin.TabularInline):
@@ -49,10 +57,11 @@ class OrderItemInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'get_first_name', 'get_last_name', 'get_city',
-                    'paid', 'created', 'updated', order_detail]
+                    'paid', 'created', 'updated', order_detail,
+                    export_order_to_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
-    actions = [export_to_csv]
+    actions = [export_orders_to_csv]
 
     def get_first_name(self, obj):
         return obj.user.first_name
