@@ -227,3 +227,5 @@ static/
 ssl/
 
 .idea
+
+rabbitmq/*

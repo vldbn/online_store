@@ -11,3 +11,26 @@ services:
       - "8000:8000"
     env_file:
       - .env
+  rabbitmq:
+    image: rabbitmq:3.7.8
+    #command: sh -c "rabbitmq-plugins enable rabbitmq_management; rabbitmq-server"
+    env_file: 
+      - .env
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "7000:15672"
+      - "7001:5672"
+  celery:
+    build: .
+    command: sh -c "celery -A web worker -B"
+    #command: sh -c "celery -A web flower"
+    volumes:
+      - ./web:/online_store/web
+    env_file:
+      - .env
+    depends_on:
+      - web
+      - rabbitmq
+    links: 
+      - rabbitmq

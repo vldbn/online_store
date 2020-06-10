@@ -121,3 +121,19 @@ MEDIA_URL = '/media/'
 # Cart App
 
 CART_SESSION_ID = 'cart'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Celery
+USERNAME = os.environ.get('RABBITMQ_DEFAULT_USER')
+PASSWORD = os.environ.get('RABBITMQ_DEFAULT_PASS')
+VHOST = os.environ.get('RABBITMQ_DEFAULT_VHOST')
+BROKER_URL = f'amqp://{USERNAME}:{PASSWORD}@rabbitmq:5672/{VHOST}'
+CELERY_BROKER_URL = BROKER_URL
+CELERY_RESULT_BACKEND = BROKER_URL

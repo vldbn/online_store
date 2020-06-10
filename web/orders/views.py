@@ -7,6 +7,7 @@ from store.models import Category
 from users.forms import UserForm
 from orders.forms import OrderProfileForm
 from orders.models import Order, OrderItem
+from orders.tasks import order_created
 
 
 class CreateOrderView(LoginRequiredMixin, View):
@@ -30,7 +31,6 @@ class CreateOrderView(LoginRequiredMixin, View):
         user_form = UserForm(request.POST, instance=user)
         profile_form = OrderProfileForm(request.POST, instance=user.profile)
         categories = Category.objects.all()
-
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -43,6 +43,7 @@ class CreateOrderView(LoginRequiredMixin, View):
                     quantity=item['quantity']
                 )
             cart.clear()
+            order_created.delay(order.id)
 
             context = {
                 'order': order,
