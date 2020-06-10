@@ -1,4 +1,5 @@
 import os
+import braintree
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +27,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'store.apps.StoreConfig',
     'cart.apps.CartConfig',
-    'orders.apps.OrdersConfig'
+    'orders.apps.OrdersConfig',
+    'payments.apps.PaymentsConfig'
 ]
 
 MIDDLEWARE = [
@@ -124,16 +126,43 @@ CART_SESSION_ID = 'cart'
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
+
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
 EMAIL_PORT = 587
+
 EMAIL_USE_TLS = True
 
 # Celery
 USERNAME = os.environ.get('RABBITMQ_DEFAULT_USER')
+
 PASSWORD = os.environ.get('RABBITMQ_DEFAULT_PASS')
+
 VHOST = os.environ.get('RABBITMQ_DEFAULT_VHOST')
+
 BROKER_URL = f'amqp://{USERNAME}:{PASSWORD}@rabbitmq:5672/{VHOST}'
+
 CELERY_BROKER_URL = BROKER_URL
+
 CELERY_RESULT_BACKEND = BROKER_URL
+
+# Braintree
+
+BRAINTREE_MERCHANT_ID = os.environ.get('BRAINTREE_MERCHANT_ID')
+
+BRAINTREE_PUBLIC_KEY = os.environ.get('BRAINTREE_PUBLIC_KEY')
+
+BRAINTREE_PRIVATE_KEY = os.environ.get('BRAINTREE_PRIVATE_KEY')
+
+BRAINTREE_GATEWAY = braintree.BraintreeGateway(
+    braintree.Configuration(
+        braintree.Environment.Sandbox,
+        merchant_id=BRAINTREE_MERCHANT_ID,
+        public_key=BRAINTREE_PUBLIC_KEY,
+        private_key=BRAINTREE_PRIVATE_KEY
+    )
+)

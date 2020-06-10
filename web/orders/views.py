@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views import View
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render,redirect, get_object_or_404
+from django.urls import reverse
 from cart.cart import Cart
 from store.models import Category
 from users.forms import UserForm
@@ -30,7 +31,6 @@ class CreateOrderView(LoginRequiredMixin, View):
         user = User.objects.get(username=request.user.username)
         user_form = UserForm(request.POST, instance=user)
         profile_form = OrderProfileForm(request.POST, instance=user.profile)
-        categories = Category.objects.all()
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -43,13 +43,11 @@ class CreateOrderView(LoginRequiredMixin, View):
                     quantity=item['quantity']
                 )
             cart.clear()
-            order_created.delay(order.id)
+            # TODO uncomment email sending
+            # order_created.delay(order.id)
+            request.session['order_id'] = order.id
 
-            context = {
-                'order': order,
-                'categories': categories
-            }
-            return render(request, 'orders/order_created.html', context)
+            return redirect(reverse('payments:process'))
 
 
 class OrderListView(LoginRequiredMixin, View):

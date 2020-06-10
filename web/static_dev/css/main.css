@@ -1090,3 +1090,120 @@ a.nav-dropdown__dropdown-item:hover {
   padding-left: 25px;
   color: #ff1f31;
 }
+
+.wrapper-payments {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  border: 2px solid #f5f5f5;
+  border-radius: 10px;
+  max-width: 500px;
+  padding: 20px;
+  margin-top: 50px;
+  background-color: #fff;
+}
+
+.payment-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  height: 35px;
+  background-color: #fff;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border: 2px solid #f5f5f5;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #808080;
+}
+
+.payment-title__done {
+  color: #2dab16;
+}
+
+.payment-title__canceled {
+  color: #cc1916;
+}
+
+#payment-form {
+  width: 468px;
+  display: inline-block;
+}
+
+.payment-form__input-wrapper {
+  margin-bottom: 25px;
+  align-items: center;
+  border: 2px solid #f5f5f5;
+}
+
+#card-number {
+  margin: 10px 90px 15px 90px;
+  height: 35px;
+  border: 2px solid #f5f5f5;
+  -webkit-transition: border-color 160ms;
+  transition: border-color 160ms;
+}
+
+#card-number.braintree-hosted-fields-focused {
+  border-color: #727478;
+}
+
+#card-number.braintree-hosted-fields-invalid {
+  border-color: tomato;
+}
+
+#card-number.braintree-hosted-fields-valid {
+  border-color: limegreen;
+}
+
+#cvv {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: 45px;
+  height: 35px;
+  border: 2px solid #f5f5f5;
+  -webkit-transition: border-color 160ms;
+  transition: border-color 160ms;
+}
+
+#cvv.braintree-hosted-fields-focused {
+  border-color: #727478;
+}
+
+#cvv.braintree-hosted-fields-invalid {
+  border-color: tomato;
+}
+
+#cvv.braintree-hosted-fields-valid {
+  border-color: limegreen;
+}
+
+#expiration-date {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: 85px;
+  height: 35px;
+  border: 2px solid #f5f5f5;
+  -webkit-transition: border-color 160ms;
+  transition: border-color 160ms;
+}
+
+#expiration-date.braintree-hosted-fields-focused {
+  border-color: #727478;
+}
+
+#expiration-date.braintree-hosted-fields-invalid {
+  border-color: tomato;
+}
+
+#expiration-date.braintree-hosted-fields-valid {
+  border-color: limegreen;
+}
