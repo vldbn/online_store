@@ -1,7 +1,8 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views import View
-from django.shortcuts import render,redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from cart.cart import Cart
 from store.models import Category
@@ -77,3 +78,13 @@ class OrderDetailView(LoginRequiredMixin, View):
             'items': items
         }
         return render(request, 'orders/order_list_detail.html', context)
+
+
+@staff_member_required
+def admin_order_detail(request, id):
+    order = get_object_or_404(Order, id=id)
+    context = {
+        'order': order
+    }
+    return render(request, 'admin/orders/admin_order_detail.html',
+                  context)
