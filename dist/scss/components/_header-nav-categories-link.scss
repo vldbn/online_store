@@ -1,0 +1,30 @@
+.header-categories-link {
+    padding: 0 40px 0 30px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+    color: #808080;
+
+    &:hover {
+        color: $blue;
+        text-decoration: none;
+
+        svg {
+            fill: $blue;
+        }
+    }
+}
+
+.header-categories-link__icon {
+    margin-right: 22px;
+    svg {
+        fill: gray;
+    }
+}
+
+.header-categories-link__text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+}
