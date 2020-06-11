@@ -125,6 +125,7 @@ MEDIA_URL = '/media/'
 CART_SESSION_ID = 'cart'
 
 # Email settings
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
@@ -138,6 +139,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Celery
+
 USERNAME = os.environ.get('RABBITMQ_DEFAULT_USER')
 
 PASSWORD = os.environ.get('RABBITMQ_DEFAULT_PASS')
@@ -166,3 +168,11 @@ BRAINTREE_GATEWAY = braintree.BraintreeGateway(
         private_key=BRAINTREE_PRIVATE_KEY
     )
 )
+
+# Redis
+
+REDIS_HOST = 'redis'
+
+REDIS_PORT = 6379
+
+REDIS_DB = 1

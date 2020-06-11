@@ -79,3 +79,8 @@
     margin-left: auto;
     margin-right: auto;
 }
+.card-detail__recommendations {
+    &>h3 {
+        margin-bottom: 20px;
+    }
+}

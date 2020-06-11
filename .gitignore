@@ -228,3 +228,4 @@ ssl/
 .idea
 
 rabbitmq/*
+redis/*

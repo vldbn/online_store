@@ -271,6 +271,11 @@ a.nav-dropdown__dropdown-item:hover {
   margin-bottom: 30px;
 }
 
+.carusel {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .carousel__item {
   display: flex;
   flex-direction: column;
@@ -278,7 +283,7 @@ a.nav-dropdown__dropdown-item:hover {
   justify-content: center;
   text-align: center;
   width: 100%;
-  height: 200px;
+  height: 400px;
 }
 
 .carousel__img {
@@ -286,6 +291,8 @@ a.nav-dropdown__dropdown-item:hover {
   position: relative;
   background-position: center;
   background-size: cover;
+  max-width: 50%;
+  max-height: 80%;
   background-repeat: no-repeat;
 }
 
@@ -295,27 +302,22 @@ a.nav-dropdown__dropdown-item:hover {
   right: 0;
   margin: auto;
   position: absolute;
-  bottom: 270px;
-  color: #ffffff;
+  bottom: 100px;
+}
+
+.carousel__item-title-header {
+  color: #b5b1ae;
   font-size: 36px;
-  font-weight: 300;
+  font-weight: bold;
   line-height: 1;
-}
-
-.carousel__item-text {
-  position: absolute;
-  bottom: 120px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 2.14;
-}
-
-.carousel__item-text p {
-  margin-bottom: 15px;
+  max-width: 350px;
+  max-height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #d1cbc5;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgba(209, 203, 197, 0.3);
 }
 
 .owl-theme .owl-nav {
@@ -355,7 +357,7 @@ a.nav-dropdown__dropdown-item:hover {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  border: 2px solid #ffffff;
+  border: 2px solid #595b5e;
   border-radius: 50%;
   background: transparent;
   background-repeat: no-repeat;
@@ -364,13 +366,14 @@ a.nav-dropdown__dropdown-item:hover {
 }
 
 .owl-carousel.owl-theme .owl-nav button.owl-prev {
+  color: #595b5e;
   left: 60px;
-  background-image: url("../icons/arrow-left.svg");
+  background-image: url("/static/icons/arrow-left.svg");
 }
 
 .owl-carousel.owl-theme .owl-nav button.owl-next {
   right: 60px;
-  background-image: url("../icons/arrow-right.svg");
+  background-image: url("/static/icons/arrow-right.svg");
 }
 
 .owl-theme .owl-nav.disabled + .owl-dots {
@@ -856,6 +859,10 @@ a.nav-dropdown__dropdown-item:hover {
   color: #808080;
   margin-left: auto;
   margin-right: auto;
+}
+
+.card-detail__recommendations > h3 {
+  margin-bottom: 20px;
 }
 
 .pagination {

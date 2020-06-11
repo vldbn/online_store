@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}
-    {{ product.name }}
+{{ product.name }}
 {% endblock title %}
-
 {% block content %}
 <div class="row">
     <div class="col-3">
@@ -36,7 +34,7 @@
                     <div class="card__rating-value">12</div>
                 </div>
                 {% if user.is_authenticated %}
-                    <div class="card-detail__cart-form">
+                <div class="card-detail__cart-form">
                     <form method="POST" action="{% url 'cart:add' product_id=product.id %}">
                         {% csrf_token %}
                         {{ form }}
@@ -47,8 +45,32 @@
                 <div class="card-detail__description">
                     <p>{{ product.description }}</p>
                 </div>
+                {% if recommended_products %}
+                <div class="card-detail__recommendations">
+                    <h3>People who bought {{ product.name }}, also bought:</h3>
+                    <div class="carousel owl-carousel owl-theme" id="carousel-header">
+                        {% for item in recommended_products %}
+                        <div class="carousel__item">
+                            <img class="carousel__img" src="
+                                {% if item.image %}
+                                {{ item.image.url }}
+                                {% else %}
+                                {% static 'icons/no-image.png' %}
+                                {% endif %}" alt="">
+                            <div class="carousel__item-title">
+                                <a class="link-lwc" href="{% url 'store:product-detail' slug=item.slug %}">
+
+                                       <button class="carousel__item-title-header">
+                                            {{ item.name }}
+                                       </button>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock content %}
+    {% endblock content %}

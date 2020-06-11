@@ -34,7 +34,7 @@
         top: 50%;
         transform: translateY(-50%);
 
-        border: 2px solid #ffffff;
+        border: 2px solid $grey;
         border-radius: 50%;
         background: transparent;
 
@@ -44,14 +44,15 @@
     }
 
     button.owl-prev {
+        color: $grey;
         left: 60px;
-        background-image: url("../icons/arrow-left.svg");
+        background-image: url("/static/icons/arrow-left.svg");
 
     }
 
     button.owl-next {
         right: 60px;
-        background-image: url("../icons/arrow-right.svg");
+        background-image: url("/static/icons/arrow-right.svg");
     }
 }
 

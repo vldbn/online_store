@@ -3,6 +3,7 @@ from django.views import View
 from django.shortcuts import render, get_object_or_404
 from cart.forms import CartAddButton, CartAddForm
 from store.models import Category, Product
+from store.recommendations import Recommendations
 
 
 class ProductListView(View):
@@ -60,13 +61,18 @@ class ProductCategoryListView(View):
 class ProductDetailView(View):
     """Product detail view."""
 
+    r = Recommendations()
+
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         categories = Category.objects.all()
         form = CartAddForm()
+        recommended_products = self.r.suggest_products_for([product], 4)
+        print(recommended_products)
         context = {
             'product': product,
             'categories': categories,
-            'form': form
+            'form': form,
+            'recommended_products': recommended_products
         }
         return render(request, 'store/product_detail.html', context)
