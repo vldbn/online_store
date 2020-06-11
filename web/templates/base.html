@@ -21,7 +21,7 @@
         <div class="container-fluid">
             <div class="header-top">
                 {% if user.is_authenticated %}
-                 <a class="header-top__auth-link link-logout" href="{% url 'users:logout' %}">Logout</a>
+                <a class="header-top__auth-link link-logout" href="{% url 'users:logout' %}">Logout</a>
                 {% else %}
                 <a class="header-top__auth-link link-sign" href="{% url 'users:signin' %}">Sign in</a>
                 {% endif %}
@@ -40,16 +40,21 @@
             </div>
             {% include "components/_navbar.html" %}
         </div>
-        <main>
-            <div class="container-fluid">
-                <div class="wrapper">
-                    {% block content %}
-                    {% endblock content %}
-                </div>
-            </div>
-            </div>
-        </main>
     </header>
+    <main>
+        <div class="container-fluid">
+            <div class="wrapper">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer">
+            <p class="text-center copyright">Online Store &copy; Copyright {% now 'Y' %}</p>
+        </div>
+    </footer>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/carusel.js' %}"></script>

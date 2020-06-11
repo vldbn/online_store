@@ -11,7 +11,9 @@
     </div>
     <div class="header-nav__navbar">
         <a href="#" class="header-nav__link">Super Deals</a>
-        <a href="{% url 'store:wishlist' %}" class="header-nav__link">Wish list</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'store:wishlist' %}" class="header-nav__link">Wish list</a>
+        {% endif %}
         <a href="#" class="header-nav__link">Collections</a>
         <a href="#" class="header-nav__link">Bestselling</a>
     </div>
