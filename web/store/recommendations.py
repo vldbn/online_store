@@ -18,22 +18,17 @@ class Recommendations:
 
         for product_id in product_ids:
             for with_id in product_ids:
-                # Получаем товары, купленные вместе с текущим.
                 if product_id != with_id:
-                    # Увеличиваем их рейтинг.
                     self.r.zincrby(self.get_product_key(product_id), 1,
                                    with_id)
 
     def suggest_products_for(self, products, max_results=6):
         product_ids = [p.id for p in products]
-        print(product_ids)
         if len(products) == 1:
             # only 1 product
             suggestions = self.r.zrange(
                 self.get_product_key(product_ids[0]),
                 0, -1, desc=True)[:max_results]
-            print('sug:', suggestions)
-            print(self.get_product_key(product_ids[0]))
         else:
             flat_ids = ''.join([str(id) for id in product_ids])
             tmp_key = 'tmp_{}'.format(flat_ids)

@@ -19,6 +19,7 @@ from orders.tasks import order_created
 
 class CreateOrderView(LoginRequiredMixin, View):
     """Create order view."""
+
     r = Recommendations()
     def get(self, request):
         user = User.objects.get(username=request.user.username)

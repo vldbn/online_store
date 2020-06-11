@@ -57,11 +57,12 @@
 .card-detail__description {
     text-align: justify;
 }
-.card-detail__cart-form{
+
+.card-detail__cart-form {
     max-width: 190px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 
 .card-form__input-btn {
@@ -79,8 +80,50 @@
     margin-left: auto;
     margin-right: auto;
 }
+
 .card-detail__recommendations {
     &>h3 {
         margin-bottom: 20px;
     }
+}
+
+.card-detail_wish-form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 170px;
+    margin-bottom: 5px;
+}
+
+.wish-form__input-btn-wish {
+    max-width: 170px;
+    height: 35px;
+    background-color: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    border: 2px solid tomato;
+    letter-spacing: 2px;
+    font-size: 10px;
+    font-weight: bold;
+    color: tomato;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wish-form__input-btn-del{
+    max-width: 170px;
+    height: 35px;
+    background-color: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    border: 2px solid $grey;
+    letter-spacing: 2px;
+    font-size: 10px;
+    font-weight: bold;
+    color: $grey;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -1,10 +1,12 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
-from store.models import Category, Product
+from store.models import Category, Product, Wish
 
 
 class ModelsTest(TestCase):
     """Test store models."""
-
+    username = 'test_user'
+    password = 'secretpassword'
     category_name = 'Test category'
     category_slug = 'test-category'
 
@@ -15,16 +17,25 @@ class ModelsTest(TestCase):
 
     def setUp(self):
         self.category = Category.objects.create(
-            name = self.category_name,
-            slug = self.category_slug
+            name=self.category_name,
+            slug=self.category_slug
         )
 
         self.product = Product.objects.create(
             category=self.category,
             name=self.product_name,
             slug=self.product_slug,
-            description = self.product_description,
-            price = self.product_price
+            description=self.product_description,
+            price=self.product_price
+        )
+
+        self.user = User.objects.create_user(
+            username=self.username,
+            password=self.password
+        )
+        self.wish = Wish.objects.create(
+            user=self.user,
+            product=self.product
         )
 
     def test_category_model(self):
@@ -37,3 +48,7 @@ class ModelsTest(TestCase):
         self.assertEqual(self.product.slug, self.product_slug)
         self.assertEqual(self.product.description, self.product_description)
         self.assertEqual(self.product.price, self.product_price)
+
+    def test_wish_model(self):
+        self.assertEqual(self.wish.user, self.user)
+        self.assertEqual(self.wish.product, self.product)

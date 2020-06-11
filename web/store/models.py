@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -46,6 +47,11 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('store:product-detail', args=[self.slug])
 
+    def wished_by_users(self):
+        users_q = self.product_wished.filter(product_id=self.id)
+        user_list = [i.user_id for i in users_q]
+        return user_list
+
 
 @receiver(post_delete, sender=Product)
 def delete_image(sender, instance, **kwargs):
@@ -53,3 +59,20 @@ def delete_image(sender, instance, **kwargs):
 
     if instance.image:
         instance.image.delete(False)
+
+
+class Wish(models.Model):
+    """Wish model."""
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='user_wish')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='product_wished')
+
+    def __str__(self):
+        return f'User: {self.user} liked product:{self.product}'
+    def get_user_id(self):
+        return self.user.id
+
+    def get_product_id(self):
+        return self.product.id

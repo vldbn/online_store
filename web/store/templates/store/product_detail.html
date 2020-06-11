@@ -41,6 +41,16 @@
                         <button class="card-form__input-btn">To cart</button>
                     </form>
                 </div>
+                <div class="card-detail_wish-form">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% if user.id in product.wished_by_users %}
+                        <button value="{{ product.id }}" name="del" class="wish-form__input-btn-del">Remove from wish list</button>
+                        {% else %}
+                        <button value="{{ product.id }}" name="wish" class="wish-form__input-btn-wish">Add to wish list</button>
+                        {% endif %}
+                    </form>
+                </div>
                 {% endif %}
                 <div class="card-detail__description">
                     <p>{{ product.description }}</p>
@@ -59,10 +69,9 @@
                                 {% endif %}" alt="">
                             <div class="carousel__item-title">
                                 <a class="link-lwc" href="{% url 'store:product-detail' slug=item.slug %}">
-
-                                       <button class="carousel__item-title-header">
-                                            {{ item.name }}
-                                       </button>
+                                    <button class="carousel__item-title-header">
+                                        {{ item.name }}
+                                    </button>
                                 </a>
                             </div>
                         </div>

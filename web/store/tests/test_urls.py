@@ -15,6 +15,7 @@ class URLsTest(TestCase):
     productlist_url = '/'
     productlist_by_category_url = '/category/{}/'
     product_detail_url = '/product/{}/'
+    wishlist_url = '/wishlist/'
 
     def setUp(self):
         self.client = Client()
@@ -45,3 +46,7 @@ class URLsTest(TestCase):
         res = self.client.get(
             self.product_detail_url.format(self.product.slug))
         self.assertEqual(res.status_code, 200)
+
+    def test_get_wishlist_page_without_auth(self):
+        res = self.client.get(self.wishlist_url, follow=True)
+        self.assertEqual(res.status_code, 404)

@@ -35,8 +35,9 @@
 }
 
 .card__icon-btns {
-    display: flex;
-    align-items: center;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
 }
 
 .card__icon-btn {
