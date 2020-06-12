@@ -12,7 +12,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('name')
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
@@ -52,6 +52,19 @@ class Product(models.Model):
         user_list = [i.user_id for i in users_q]
         return user_list
 
+    def get_rating(self):
+        rating = 0
+        ratings_q = self.product_rate.filter(product_id=self.id)
+        all_rates = ratings_q.count()
+        for i in ratings_q:
+            rating += i.rate
+        rating = rating / all_rates
+        return rating
+
+    def count_rates(self):
+        count = self.product_rate.filter(product_id=self.id).count()
+        return count
+
 
 @receiver(post_delete, sender=Product)
 def delete_image(sender, instance, **kwargs):
@@ -71,8 +84,25 @@ class Wish(models.Model):
 
     def __str__(self):
         return f'User: {self.user} liked product:{self.product}'
+
     def get_user_id(self):
         return self.user.id
 
     def get_product_id(self):
         return self.product.id
+
+
+class Rating(models.Model):
+    """Rating model."""
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='user_rate')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='product_rate')
+    rate = models.IntegerField()
+
+    def __str__(self):
+        return f'User {self.user} rated {self.product} with {self.rate}'
+
+    def get_rate(self):
+        return self.rate

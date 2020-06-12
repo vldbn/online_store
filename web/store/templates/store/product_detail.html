@@ -26,14 +26,41 @@
                     <h4>$ {{ product.price }}</h4>
                 </div>
                 <div class="card-detail__rating">
-                    <img class="card__rating-star" src="{% static 'icons/star_icon.svg' %}" alt="" />
-                    <img class="card__rating-star" src="{% static 'icons/star_icon.svg' %}" alt="" />
-                    <img class="card__rating-star" src="{% static 'icons/star_icon.svg' %}" alt="" />
-                    <img class="card__rating-star" src="{% static 'icons/star_half_icon.svg' %}" alt="" />
-                    <img class="card__rating-star" src="{% static 'icons/star_border_icon.svg' %}" alt="" />
-                    <div class="card__rating-value">12</div>
+                    {% if product.get_rating > 0 and product.get_rating <= 0.5 %}
+                    {% include "components/stars/05.html" %}
+                    {% elif product.get_rating > 0.5 and product.get_rating <= 1.0 %}
+                    {% include "components/stars/10.html" %}
+                    {% elif product.get_rating > 1.0 and product.get_rating <= 1.5 %}
+                    {% include "components/stars/15.html" %}
+                    {% elif product.get_rating > 1.5 and product.get_rating <= 2.0 %}
+                    {% include "components/stars/20.html" %}
+                    {% elif product.get_rating > 2.0 and product.get_rating <= 2.5 %}
+                    {% include "components/stars/25.html" %}
+                    {% elif product.get_rating > 2.5 and product.get_rating <= 3.0 %}
+                    {% include "components/stars/30.html" %}
+                    {% elif product.get_rating > 3.0 and product.get_rating <= 3.5 %}
+                    {% include "components/stars/35.html" %}
+                    {% elif product.get_rating > 3.5 and product.get_rating <= 4.0 %}
+                    {% include "components/stars/40.html" %}
+                    {% elif product.get_rating > 4.0 and product.get_rating <= 4.5 %}
+                    {% include "components/stars/45.html" %}
+                    {% elif product.get_rating > 4.5 and product.get_rating <= 5.0 %}
+                    {% include "components/stars/50.html" %}
+                    {% else %}
+                    {% include "components/stars/00.html" %}
+                    {% endif %}
+                    <div class="card__rating-value">{{ product.count_rates }}</div>
                 </div>
                 {% if user.is_authenticated %}
+                <div class="card-detail__rating-form">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="rating-form__input-wrapper">
+                            {{ rating_form }}
+                        </div>
+                        <button type="submit" class="rating-form__input-btn">Rate</button>
+                    </form>
+                </div>
                 <div class="card-detail__cart-form">
                     <form method="POST" action="{% url 'cart:add' product_id=product.id %}">
                         {% csrf_token %}
@@ -41,7 +68,7 @@
                         <button class="card-form__input-btn">To cart</button>
                     </form>
                 </div>
-                <div class="card-detail_wish-form">
+                <div class="card-detail__wish-form">
                     <form method="POST">
                         {% csrf_token %}
                         {% if user.id in product.wished_by_users %}

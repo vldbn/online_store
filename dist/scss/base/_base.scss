@@ -64,11 +64,14 @@ footer {
 }
 
 .wrapper {
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 15px;
     padding-left: 10%;
     padding-right: 10%;
     position:relative;
     min-height: 100%;
+    max-width: 90%;
 }
 
 .link-lwc {

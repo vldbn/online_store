@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -5,7 +6,8 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import CartAddButton, CartAddForm
-from store.models import Category, Product, Wish
+from store.forms import RatingForm
+from store.models import Category, Product, Wish, Rating
 from store.recommendations import Recommendations
 
 
@@ -45,7 +47,7 @@ class ProductListView(View):
             wishes = Wish.objects.filter(product_id=product_id)
             wish = wishes.filter(user_id=user.id)
             wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class ProductCategoryListView(View):
@@ -88,7 +90,7 @@ class ProductCategoryListView(View):
             wishes = Wish.objects.filter(product_id=product_id)
             wish = wishes.filter(user_id=user.id)
             wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class ProductDetailView(View):
@@ -99,30 +101,56 @@ class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         categories = Category.objects.all()
+
         form = CartAddForm()
+
+        rating_form = RatingForm()
+
         recommended_products = self.r.suggest_products_for([product], 4)
-        print(recommended_products)
+
         context = {
             'product': product,
             'categories': categories,
             'form': form,
+            'rating_form': rating_form,
             'recommended_products': recommended_products
         }
         return render(request, 'store/product_detail.html', context)
 
     def post(self, request, slug):
         user = User.objects.get(id=request.user.id)
+        product = Product.objects.get(slug=slug)
+        rating_form = RatingForm(request.POST)
+
+
         if 'wish' in request.POST:
             product_id = request.POST.get('wish')
             Wish.objects.create(
                 user=user,
                 product_id=product_id
             )
-        elif 'del' in request.POST:
+        if 'del' in request.POST:
             product_id = request.POST.get('del')
             wishes = Wish.objects.filter(product_id=product_id)
             wish = wishes.filter(user_id=user.id)
             wish.delete()
+
+        if rating_form.is_valid():
+            rate = rating_form.cleaned_data.get('rate')
+            try:
+                ex_rate = Rating.objects.get(user=user, product=product)
+            except ObjectDoesNotExist:
+                ex_rate = None
+            if ex_rate:
+                ex_rate.rate = rate
+                ex_rate.save()
+            else:
+                Rating.objects.create(
+                    user=user,
+                    product=product,
+                    rate=rate
+                )
+
         return redirect('store:product-detail', slug=slug)
 
 
@@ -159,9 +187,9 @@ class WishListView(LoginRequiredMixin, View):
                 user=user,
                 product_id=product_id
             )
-        elif 'del' in request.POST:
+        if 'del' in request.POST:
             product_id = request.POST.get('del')
             wishes = Wish.objects.filter(product_id=product_id)
             wish = wishes.filter(user_id=user.id)
             wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

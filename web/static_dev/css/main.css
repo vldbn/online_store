@@ -60,11 +60,14 @@ footer {
 }
 
 .wrapper {
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 15px;
   padding-left: 10%;
   padding-right: 10%;
   position: relative;
   min-height: 100%;
+  max-width: 90%;
 }
 
 .link-lwc {
@@ -318,7 +321,7 @@ a.nav-dropdown__dropdown-item:hover {
 }
 
 .carousel__item-title-header {
-  color: #b5b1ae;
+  color: #fff;
   font-size: 36px;
   font-weight: bold;
   line-height: 1;
@@ -326,10 +329,10 @@ a.nav-dropdown__dropdown-item:hover {
   max-height: 50px;
   margin-left: auto;
   margin-right: auto;
-  border: 2px solid #d1cbc5;
+  border: 2px solid #505d78;
   border-radius: 10px;
   padding: 5px;
-  background-color: rgba(209, 203, 197, 0.3);
+  background-color: rgba(80, 93, 120, 0.6);
 }
 
 .owl-theme .owl-nav {
@@ -878,7 +881,7 @@ a.nav-dropdown__dropdown-item:hover {
   margin-bottom: 20px;
 }
 
-.card-detail_wish-form {
+.card-detail__wish-form {
   margin-left: auto;
   margin-right: auto;
   max-width: 170px;
@@ -915,6 +918,54 @@ a.nav-dropdown__dropdown-item:hover {
   font-size: 10px;
   font-weight: bold;
   color: #595b5e;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-detail__rating-form-wrapper {
+  max-width: 190px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.card-detail__rating-form {
+  max-width: 190px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.rating-form__input-wrapper {
+  display: inline-block;
+}
+
+.rating-form__input {
+  padding-left: 20px;
+  width: 80px;
+  height: 35px;
+  border: 2px solid #f5f5f5;
+  border-radius: 10px;
+  color: #b3b3b3;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 2.14;
+}
+
+.rating-form__input-btn {
+  width: 103px;
+  height: 35px;
+  background-color: #fff;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border: 2px solid #f5f5f5;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  color: green;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1019,7 +1070,6 @@ a.nav-dropdown__dropdown-item:hover {
   width: 80px;
   height: 35px;
   padding-left: 20px;
-  padding-right: 20px;
   border: 2px solid #f5f5f5;
   border-radius: 10px;
   color: #b3b3b3;
