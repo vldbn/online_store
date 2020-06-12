@@ -229,3 +229,4 @@ ssl/
 
 rabbitmq/*
 redis/*
+database/*

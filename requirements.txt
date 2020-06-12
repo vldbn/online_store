@@ -19,6 +19,7 @@ httptools==0.1.1
 idna==2.9
 kombu==4.6.10
 Pillow==7.1.2
+psycopg2-binary==2.8.5
 pycparser==2.20
 Pyphen==0.9.5
 pytz==2020.1
