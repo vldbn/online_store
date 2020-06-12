@@ -736,7 +736,11 @@ a.nav-dropdown__dropdown-item:hover {
 }
 
 .card__img > img {
-  width: 100%;
+  display: block;
+  max-width: 120px;
+  max-height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card__title {
@@ -817,8 +821,11 @@ a.nav-dropdown__dropdown-item:hover {
 }
 
 .card-detail__img > img {
-  width: 100%;
-  height: 100%;
+  display: block;
+  max-width: 200px;
+  max-height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card-detail__title {
