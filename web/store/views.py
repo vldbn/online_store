@@ -12,6 +12,7 @@ from cart.forms import CartAddButton, CartAddForm
 from store.forms import RatingForm
 from store.models import Category, Product, Wish, Rating
 from store.recommendations import Recommendations
+from store.tasks import fit_model
 
 recommendations_url = settings.RECOMMENDATIONS_URL
 fit_url = settings.FIT_URL
@@ -150,7 +151,7 @@ class ProductDetailView(View):
                 ex_rate.rate = rate
                 ex_rate.save()
                 try:
-                    requests.get(fit_url)
+                    fit_model.delay()
                 except requests.ConnectionError:
                     print('Can not send request.')
             else:
@@ -160,7 +161,7 @@ class ProductDetailView(View):
                     rate=rate
                 )
                 try:
-                    requests.get(fit_url)
+                    fit_model.delay()
                 except requests.ConnectionError:
                     print('Can not send request.')
 

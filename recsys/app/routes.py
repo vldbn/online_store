@@ -48,7 +48,7 @@ class FitModel(object):
 
             net.fit(net.model, net.criterion, net.optimizer,
                     (train_users, train_products, train_ratings),
-                    (test_users, test_products, test_ratings), epochs=3, bs=5)
+                    (test_users, test_products, test_ratings), epochs=2, bs=5)
             torch.save(net.model.state_dict(), './model/state')
 
 
@@ -57,7 +57,6 @@ class SignIn(object):
     dict with key - 'user_id' and value - {'product_id' : ratings}.
     For input: json {'user_id':1}."""
 
-    # TODO on login
     def on_post(self, req, resp):
 
         try:
@@ -117,4 +116,5 @@ class Recommendations(object):
                 resp.status = falcon.HTTP_200
                 resp.media = j
             except KeyError:
-                print('No recommendations in dict.')
+                print('No user_id in dict.')
+                resp.status = falcon.HTTP_500
