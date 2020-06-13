@@ -5,8 +5,8 @@ from api import views
 router = DefaultRouter()
 
 router.register('ratings',views.RatingViewSet, basename='ratings')
+router.register('products', views.ProductsViewSet, basename='products')
+
 urlpatterns = [
-    path('users/', views.UsersAmount.as_view()),
-    path('products/', views.ProductsAmount.as_view()),
     path('', include(router.urls))
 ]
