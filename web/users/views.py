@@ -1,4 +1,7 @@
+import json
+import requests
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -9,6 +12,8 @@ from store.models import Category
 from django.views import View
 from users import forms
 
+signin_url = settings.SIGNIN_URL
+
 
 class ProfileView(LoginRequiredMixin, View):
     """Profile view"""
@@ -18,7 +23,7 @@ class ProfileView(LoginRequiredMixin, View):
         categories = Category.objects.all()
         context = {
             'user': user,
-            'categories':categories
+            'categories': categories
         }
         return render(request, 'users/profile.html', context)
 
@@ -102,6 +107,14 @@ class SigninView(View):
                                      'User does not exist.')
                 return redirect('users:signin')
             else:
+                user_id = {'user_id': user.id}
+                j = json.dumps(user_id)
+
+                try:
+                    requests.post(signin_url, data=j)
+                except requests.ConnectionError:
+                    print('Can not connect to recsys.')
+
                 login(request, user)
                 return redirect('store:productlist')
 

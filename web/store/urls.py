@@ -8,5 +8,7 @@ urlpatterns = [
          name='productlist-by-category'),
     path('product/<str:slug>/', views.ProductDetailView.as_view(),
          name='product-detail'),
-    path('wishlist/', views.WishListView.as_view(), name='wishlist')
+    path('wishlist/', views.WishListView.as_view(), name='wishlist'),
+    path('recommendations/<int:user_id>/', views.RecommendationsView.as_view(),
+         name='recommendations')
 ]

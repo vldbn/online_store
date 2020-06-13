@@ -181,3 +181,12 @@ REDIS_HOST = 'redis'
 REDIS_PORT = 6379
 
 REDIS_DB = 1
+
+
+#Neural Network
+
+SIGNIN_URL = 'http://recsys:5000/signin'
+
+RECOMMENDATIONS_URL = 'http://recsys:5000/recommendations'
+
+FIT_URL = 'http://recsys:5000/fit'

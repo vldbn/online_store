@@ -73,7 +73,6 @@ class SignIn(object):
 
             df = pd.DataFrame(j)
             df = df.astype('int64')
-            print(df)
             user_ids = [id for i in range(0, len(df['id']))]
             df.rename(columns={'id': 'product'}, inplace=True)
             df['user'] = user_ids
@@ -93,7 +92,6 @@ class SignIn(object):
             result_dict = df.set_index('product')['result'].to_dict()
             usr_result_dict = {user_id: result_dict}
             recommendations_dict.update(usr_result_dict)
-            print(recommendations_dict)
         resp.status = falcon.HTTP_200
 
 
@@ -114,8 +112,6 @@ class Recommendations(object):
             user_rec_list_sorted = sorted(user_rec,
                                           key=user_rec.get, reverse=True)
             recommendations_list = user_rec_list_sorted[0:6]
-            print(user_rec)
-            print(recommendations_list)
             d = {'recommendations': recommendations_list}
             j = json.dumps(d)
             resp.status = falcon.HTTP_200
