@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(os.environ.get('DJANGO_DEBUG'))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -28,7 +28,9 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
-    'payments.apps.PaymentsConfig'
+    'payments.apps.PaymentsConfig',
+    'api.apps.ApiConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

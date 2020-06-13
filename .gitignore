@@ -230,3 +230,4 @@ ssl/
 rabbitmq/*
 redis/*
 database/*
+state

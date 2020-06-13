@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    build: .
+    build: web
     command: sh -c "python manage.py makemigrations && python manage.py migrate"
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -25,7 +25,7 @@ services:
       - "7000:15672"
       - "7001:5672"
   celery:
-    build: .
+    build: web
     command: sh -c "celery -A web worker -B"
     #command: sh -c "celery -A web flower"
     volumes:
@@ -58,3 +58,11 @@ services:
       - ./database:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  recsys:
+    build: recsys
+    volumes: 
+      - ./recsys:/online_store/recsys
+    ports: 
+      - "5000:5000"
+    command: sh -c "gunicorn main:app --bind 0.0.0.0:5000"
+    restart: "always"
