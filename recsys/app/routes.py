@@ -103,16 +103,18 @@ class Recommendations(object):
         try:
             raw_data = json.load(req.bounded_stream)
             user_id = raw_data.get('user_id')
-            print(raw_data)
         except json.JSONDecodeError:
             user_id = None
 
         if user_id:
-            user_rec = recommendations_dict[user_id]
-            user_rec_list_sorted = sorted(user_rec,
-                                          key=user_rec.get, reverse=True)
-            recommendations_list = user_rec_list_sorted[0:6]
-            d = {'recommendations': recommendations_list}
-            j = json.dumps(d)
-            resp.status = falcon.HTTP_200
-            resp.media = j
+            try:
+                user_rec = recommendations_dict[user_id]
+                user_rec_list_sorted = sorted(user_rec,
+                                              key=user_rec.get, reverse=True)
+                recommendations_list = user_rec_list_sorted[0:6]
+                d = {'recommendations': recommendations_list}
+                j = json.dumps(d)
+                resp.status = falcon.HTTP_200
+                resp.media = j
+            except KeyError:
+                print('No recommendations in dict.')

@@ -215,21 +215,28 @@ class RecommendationsView(LoginRequiredMixin, View):
     def get(self, request, user_id):
         categories = Category.objects.all()
         user = User.objects.get(id=user_id)
-        user_id = {'user_id': user.id}
-        j = json.dumps(user_id)
+        try:
+            user_id = {'user_id': user.id}
+            j = json.dumps(user_id)
 
-        response = requests.post(recommendations_url, data=j)
-        response = json.loads(response.json())
+            response = requests.post(recommendations_url, data=j)
+            response = json.loads(response.json())
 
-        rec_list = response['recommendations']
-        products = []
-        for i in rec_list:
-            products.append(Product.objects.get(id=int(i)))
+            rec_list = response['recommendations']
+            products = []
+            for i in rec_list:
+                products.append(Product.objects.get(id=int(i)))
 
-        context = {
-            'categories': categories,
-            'products': products,
-            'category': 'Recommendations'
-        }
+            context = {
+                'categories': categories,
+                'products': products,
+                'category': 'Recommendations'
+            }
+        except json.JSONDecodeError:
+            context = {
+                'categories': categories,
+                'products': [],
+                'category': 'Recommendations'
+            }
 
         return render(request, 'store/product_list.html', context)
