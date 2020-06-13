@@ -16,8 +16,12 @@ class FitModel(object):
 
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
-        res = requests.get(rating_url)
-        j = res.json()
+
+        try:
+            res = requests.get(rating_url)
+            j = res.json()
+        except requests.ConnectionError:
+            print('Can not get data.')
 
         try:
             df = pd.DataFrame(j)
@@ -108,7 +112,7 @@ class Recommendations(object):
         if user_id:
             user_rec = recommendations_dict[user_id]
             user_rec_list_sorted = sorted(user_rec,
-                                     key=user_rec.get, reverse=True)
+                                          key=user_rec.get, reverse=True)
             recommendations_list = user_rec_list_sorted[0:6]
             print(user_rec)
             print(recommendations_list)

@@ -92,12 +92,9 @@ def fit(model, criterion, optimizer, train_data, test_data, epochs,
 
             train_loss.append(loss.item())
 
-        # Get train loss and test loss
         train_loss = np.mean(train_loss)  # a little misleading
 
-        # we could do this if the test set size was manageable
-        # test_outputs = model(test_users, test_movies)
-        # test_loss = criterion(test_outputs, test_ratings).item()
+
         test_loss = []
         for j in range(int(np.ceil(len(test_users) / bs))):
             # get the batch
