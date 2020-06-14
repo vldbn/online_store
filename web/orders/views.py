@@ -71,6 +71,7 @@ class OrderListView(LoginRequiredMixin, View):
         user = User.objects.get(username=request.user.username)
         orders = Order.objects.filter(user=user)
         categories = Category.objects.all()
+
         context = {
             'orders': orders,
             'categories': categories
