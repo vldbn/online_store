@@ -3,14 +3,14 @@ version: "3"
 services:
   web:
     build: web
-    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "uvicorn web.asgi:application --reload --host 0.0.0.0 --port 8000"
     volumes:
       - ./web:/online_store/web
     ports:
-      - "8000:8000"
+      - "8000"
     env_file:
       - .env
-    depends_on: 
+    depends_on:
       - redis
       - database
       - recsys
@@ -35,7 +35,7 @@ services:
       - rabbitmq
       - database
       - recsys
-    links: 
+    links:
       - rabbitmq
   redis:
     restart: always
@@ -59,9 +59,21 @@ services:
       - "5432:5432"
   recsys:
     build: recsys
-    volumes: 
+    volumes:
       - ./recsys:/online_store/recsys
-    ports: 
-      - "5000:5000"
+    ports:
+      - "5000"
     command: sh -c "gunicorn main:app --bind 0.0.0.0:5000"
     restart: "always"
+  nginx:
+    image: nginx:1.17.9
+    ports:
+      - "80:80"
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ./web/static:/online_store/web/static
+      - ./web/media:/online_store/web/media
+      - ./nginx/conf:/etc/nginx/
+    depends_on:
+      - web

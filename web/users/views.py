@@ -104,7 +104,7 @@ class SigninView(View):
             user = authenticate(username=username, password=password)
             if user is None:
                 messages.add_message(request, messages.INFO,
-                                     'User does not exist.')
+                                     'Incorrect username or password.')
                 return redirect('users:signin')
             else:
                 user_id = {'user_id': user.id}

@@ -5,7 +5,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import CartAddButton, CartAddForm
@@ -241,7 +240,6 @@ class MostWishedView(WishMixin, View):
             else:
                 wishes_dict[item.product_id] += 1
 
-        print(wishes_dict)
         wishes_list_sorted = sorted(wishes_dict,
                                     key=wishes_dict.get, reverse=True)
         most_wished = []
