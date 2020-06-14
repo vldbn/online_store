@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import CartAddButton, CartAddForm
+from orders.models import Order, OrderItem
 from store.forms import RatingForm
 from store.models import Category, Product, Wish, Rating
 from store.recommendations import Recommendations
@@ -240,4 +241,32 @@ class RecommendationsView(LoginRequiredMixin, View):
                 'category': 'Recommendations'
             }
 
+        return render(request, 'store/product_list.html', context)
+
+
+class BestsellingView(View):
+    """Returns products sorted buy amount of purchases."""
+
+    def get(self, request):
+        categories = Category.objects.all()
+        all_orders = OrderItem.objects.all()
+        orders_dict = {}
+
+        for item in all_orders:
+            if item.product_id not in orders_dict.keys():
+                orders_dict[item.product_id] = item.quantity
+            else:
+                orders_dict[item.product_id] += item.quantity
+        orders_list_sorted = sorted(orders_dict,
+                                    key=orders_dict.get, reverse=True)
+
+        bestselling = []
+        for i in orders_list_sorted[0:6]:
+            bestselling.append(Product.objects.get(id=i))
+
+        context = {
+            'categories': categories,
+            'products': bestselling,
+            'category': 'Bestselling'
+        }
         return render(request, 'store/product_list.html', context)

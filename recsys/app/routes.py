@@ -62,7 +62,6 @@ class SignIn(object):
         try:
             raw_data = json.load(req.bounded_stream)
             user_id = raw_data.get('user_id')
-            print(raw_data)
         except json.JSONDecodeError:
             user_id = None
 

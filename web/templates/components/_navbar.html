@@ -16,7 +16,7 @@
              <a href="{% url 'store:recommendations' user_id=request.user.id %}" class="header-nav__link">Personal recommendations</a>
         {% endif %}
        
-        <a href="#" class="header-nav__link">Bestselling</a>
+        <a href="{% url 'store:bestselling' %}" class="header-nav__link">Bestselling</a>
     </div>
     <!-- header-nav__select -->
     <div class="header-nav__select">
