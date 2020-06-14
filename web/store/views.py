@@ -151,20 +151,17 @@ class ProductDetailView(View):
             if ex_rate:
                 ex_rate.rate = rate
                 ex_rate.save()
-                try:
-                    fit_model.delay()
-                except requests.ConnectionError:
-                    print('Can not send request.')
+
+                fit_model.delay()
+
             else:
                 Rating.objects.create(
                     user=user,
                     product=product,
                     rate=rate
                 )
-                try:
-                    fit_model.delay()
-                except requests.ConnectionError:
-                    print('Can not send request.')
+
+                fit_model.delay()
 
         return redirect('store:product-detail', slug=slug)
 

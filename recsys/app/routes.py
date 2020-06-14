@@ -48,7 +48,7 @@ class FitModel(object):
 
             net.fit(net.model, net.criterion, net.optimizer,
                     (train_users, train_products, train_ratings),
-                    (test_users, test_products, test_ratings), epochs=2, bs=5)
+                    (test_users, test_products, test_ratings), epochs=1, bs=5)
             torch.save(net.model.state_dict(), './model/state')
 
 
