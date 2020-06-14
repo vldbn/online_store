@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import CartAddButton, CartAddForm
-from orders.models import Order, OrderItem
+from orders.models import OrderItem
 from store.forms import RatingForm
 from store.models import Category, Product, Wish, Rating
 from store.recommendations import Recommendations
@@ -250,6 +250,7 @@ class BestsellingView(View):
     def get(self, request):
         categories = Category.objects.all()
         all_orders = OrderItem.objects.all()
+
         orders_dict = {}
 
         for item in all_orders:
@@ -270,3 +271,63 @@ class BestsellingView(View):
             'category': 'Bestselling'
         }
         return render(request, 'store/product_list.html', context)
+
+    def post(self, request):
+        user = User.objects.get(id=request.user.id)
+        if 'wish' in request.POST:
+            product_id = request.POST.get('wish')
+            Wish.objects.create(
+                user=user,
+                product_id=product_id
+            )
+        if 'del' in request.POST:
+            product_id = request.POST.get('del')
+            wishes = Wish.objects.filter(product_id=product_id)
+            wish = wishes.filter(user_id=user.id)
+            wish.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class MostWishedView(View):
+    """Returns most wished products."""
+
+    def get(self, request):
+        categories = Category.objects.all()
+        wishes = Wish.objects.all()
+
+        wishes_dict = {}
+
+        for item in wishes:
+            if item.product_id not in wishes_dict.keys():
+                wishes_dict[item.product_id] = 1
+            else:
+                wishes_dict[item.product_id] += 1
+
+        print(wishes_dict)
+        wishes_list_sorted = sorted(wishes_dict,
+                                    key=wishes_dict.get, reverse=True)
+        most_wished = []
+        for i in wishes_list_sorted[0:6]:
+            most_wished.append(Product.objects.get(id=i))
+
+        context = {
+            'categories': categories,
+            'products': most_wished,
+            'category': 'Most wished'
+        }
+        return render(request, 'store/product_list.html', context)
+
+    def post(self, request):
+        user = User.objects.get(id=request.user.id)
+        if 'wish' in request.POST:
+            product_id = request.POST.get('wish')
+            Wish.objects.create(
+                user=user,
+                product_id=product_id
+            )
+        if 'del' in request.POST:
+            product_id = request.POST.get('del')
+            wishes = Wish.objects.filter(product_id=product_id)
+            wish = wishes.filter(user_id=user.id)
+            wish.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
