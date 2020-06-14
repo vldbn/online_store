@@ -26,29 +26,7 @@
                     <h4>$ {{ product.price }}</h4>
                 </div>
                 <div class="card-detail__rating">
-                    {% if product.get_rating > 0 and product.get_rating <= 0.5 %}
-                    {% include "components/stars/05.html" %}
-                    {% elif product.get_rating > 0.5 and product.get_rating <= 1.0 %}
-                    {% include "components/stars/10.html" %}
-                    {% elif product.get_rating > 1.0 and product.get_rating <= 1.5 %}
-                    {% include "components/stars/15.html" %}
-                    {% elif product.get_rating > 1.5 and product.get_rating <= 2.0 %}
-                    {% include "components/stars/20.html" %}
-                    {% elif product.get_rating > 2.0 and product.get_rating <= 2.5 %}
-                    {% include "components/stars/25.html" %}
-                    {% elif product.get_rating > 2.5 and product.get_rating <= 3.0 %}
-                    {% include "components/stars/30.html" %}
-                    {% elif product.get_rating > 3.0 and product.get_rating <= 3.5 %}
-                    {% include "components/stars/35.html" %}
-                    {% elif product.get_rating > 3.5 and product.get_rating <= 4.0 %}
-                    {% include "components/stars/40.html" %}
-                    {% elif product.get_rating > 4.0 and product.get_rating <= 4.5 %}
-                    {% include "components/stars/45.html" %}
-                    {% elif product.get_rating > 4.5 and product.get_rating <= 5.0 %}
-                    {% include "components/stars/50.html" %}
-                    {% else %}
-                    {% include "components/stars/00.html" %}
-                    {% endif %}
+                    {% include "components/_rating.html" %}
                     <div class="card__rating-value">{{ product.count_rates }}</div>
                 </div>
                 {% if user.is_authenticated %}

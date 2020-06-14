@@ -11,6 +11,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from cart.forms import CartAddButton, CartAddForm
 from orders.models import OrderItem
 from store.forms import RatingForm
+from store.mixins import WishMixin
 from store.models import Category, Product, Wish, Rating
 from store.recommendations import Recommendations
 from store.tasks import fit_model
@@ -19,7 +20,7 @@ recommendations_url = settings.RECOMMENDATIONS_URL
 fit_url = settings.FIT_URL
 
 
-class ProductListView(View):
+class ProductListView(WishMixin, View):
     """Productlist view."""
 
     def get(self, request):
@@ -42,23 +43,8 @@ class ProductListView(View):
         }
         return render(request, 'store/product_list.html', context)
 
-    def post(self, request):
-        user = User.objects.get(id=request.user.id)
-        if 'wish' in request.POST:
-            product_id = request.POST.get('wish')
-            Wish.objects.create(
-                user=user,
-                product_id=product_id
-            )
-        elif 'del' in request.POST:
-            product_id = request.POST.get('del')
-            wishes = Wish.objects.filter(product_id=product_id)
-            wish = wishes.filter(user_id=user.id)
-            wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
-class ProductCategoryListView(View):
+class ProductCategoryListView(WishMixin, View):
     """Product list view by category."""
 
     def get(self, request, slug):
@@ -84,21 +70,6 @@ class ProductCategoryListView(View):
             'form': form
         }
         return render(request, 'store/product_list.html', context)
-
-    def post(self, request, slug):
-        user = User.objects.get(id=request.user.id)
-        if 'wish' in request.POST:
-            product_id = request.POST.get('wish')
-            Wish.objects.create(
-                user=user,
-                product_id=product_id
-            )
-        elif 'del' in request.POST:
-            product_id = request.POST.get('del')
-            wishes = Wish.objects.filter(product_id=product_id)
-            wish = wishes.filter(user_id=user.id)
-            wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class ProductDetailView(View):
@@ -166,7 +137,7 @@ class ProductDetailView(View):
         return redirect('store:product-detail', slug=slug)
 
 
-class WishListView(LoginRequiredMixin, View):
+class WishListView(LoginRequiredMixin, WishMixin, View):
     """Products wish list."""
 
     def get(self, request):
@@ -191,23 +162,8 @@ class WishListView(LoginRequiredMixin, View):
         }
         return render(request, 'store/product_list.html', context)
 
-    def post(self, request):
-        user = User.objects.get(id=request.user.id)
-        if 'wish' in request.POST:
-            product_id = request.POST.get('wish')
-            Wish.objects.create(
-                user=user,
-                product_id=product_id
-            )
-        if 'del' in request.POST:
-            product_id = request.POST.get('del')
-            wishes = Wish.objects.filter(product_id=product_id)
-            wish = wishes.filter(user_id=user.id)
-            wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
-class RecommendationsView(LoginRequiredMixin, View):
+class RecommendationsView(LoginRequiredMixin, WishMixin, View):
     """Recommendations view makes post request with user_id and
     gets product id's."""
 
@@ -240,23 +196,8 @@ class RecommendationsView(LoginRequiredMixin, View):
 
         return render(request, 'store/product_list.html', context)
 
-    def post(self, request, user_id):
-        user = User.objects.get(id=request.user.id)
-        if 'wish' in request.POST:
-            product_id = request.POST.get('wish')
-            Wish.objects.create(
-                user=user,
-                product_id=product_id
-            )
-        if 'del' in request.POST:
-            product_id = request.POST.get('del')
-            wishes = Wish.objects.filter(product_id=product_id)
-            wish = wishes.filter(user_id=user.id)
-            wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
-class BestsellingView(View):
+class BestsellingView(WishMixin, View):
     """Returns products sorted buy amount of purchases."""
 
     def get(self, request):
@@ -284,23 +225,8 @@ class BestsellingView(View):
         }
         return render(request, 'store/product_list.html', context)
 
-    def post(self, request):
-        user = User.objects.get(id=request.user.id)
-        if 'wish' in request.POST:
-            product_id = request.POST.get('wish')
-            Wish.objects.create(
-                user=user,
-                product_id=product_id
-            )
-        if 'del' in request.POST:
-            product_id = request.POST.get('del')
-            wishes = Wish.objects.filter(product_id=product_id)
-            wish = wishes.filter(user_id=user.id)
-            wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
-class MostWishedView(View):
+class MostWishedView(WishMixin, View):
     """Returns most wished products."""
 
     def get(self, request):
@@ -328,18 +254,3 @@ class MostWishedView(View):
             'category': 'Most wished'
         }
         return render(request, 'store/product_list.html', context)
-
-    def post(self, request):
-        user = User.objects.get(id=request.user.id)
-        if 'wish' in request.POST:
-            product_id = request.POST.get('wish')
-            Wish.objects.create(
-                user=user,
-                product_id=product_id
-            )
-        if 'del' in request.POST:
-            product_id = request.POST.get('del')
-            wishes = Wish.objects.filter(product_id=product_id)
-            wish = wishes.filter(user_id=user.id)
-            wish.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
