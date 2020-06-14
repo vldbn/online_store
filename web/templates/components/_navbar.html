@@ -13,11 +13,9 @@
         <a href="{% url 'store:mostwished' %}" class="header-nav__link">Most Wished</a>
         <a href="{% url 'store:bestselling' %}" class="header-nav__link">Bestselling</a>
         {% if user.is_authenticated %}
-            <a href="{% url 'store:wishlist' %}" class="header-nav__link">Wish list</a>
-             <a href="{% url 'store:recommendations' user_id=request.user.id %}" class="header-nav__link">Personal recommendations</a>
+        <a href="{% url 'store:wishlist' %}" class="header-nav__link">Wish list</a>
+        <a href="{% url 'store:recommendations' user_id=request.user.id %}" class="header-nav__link">Personal recommendations</a>
         {% endif %}
-       
-       
     </div>
     <!-- header-nav__select -->
     <div class="header-nav__select">
