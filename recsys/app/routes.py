@@ -20,7 +20,7 @@ class FitModel(object):
         try:
             res = requests.get(rating_url)
             j = res.json()
-        except requests.ConnectionError:
+        except requests.exceptions.ConnectionError:
             print('Can not get data.')
 
         try:

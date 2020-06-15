@@ -192,6 +192,12 @@ class RecommendationsView(LoginRequiredMixin, WishMixin, View):
                 'products': [],
                 'category': 'Recommendations'
             }
+        except requests.exceptions.ConnectionError:
+            context = {
+                'categories': categories,
+                'products': [],
+                'category': 'Recommendations'
+            }
 
         return render(request, 'store/product_list.html', context)
 
