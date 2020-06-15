@@ -1,3 +1,4 @@
+import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -43,9 +44,15 @@ criterion = nn.MSELoss()
 
 optimizer = torch.optim.SGD(model.parameters(), lr=0.08, momentum=0.9)
 
+current_user_id = 0
+custom_user_map = {}
+current_product_id = 0
+custom_product_map = {}
+
 
 def fit(model, criterion, optimizer, train_data, test_data, epochs,
         bs=512):
+    print('Start fitting the model.')
     train_users, train_products, train_ratings = train_data
     test_users, test_products, test_ratings = test_data
 
@@ -94,7 +101,6 @@ def fit(model, criterion, optimizer, train_data, test_data, epochs,
 
         train_loss = np.mean(train_loss)  # a little misleading
 
-
         test_loss = []
         for j in range(int(np.ceil(len(test_users) / bs))):
             # get the batch
@@ -124,12 +130,6 @@ def fit(model, criterion, optimizer, train_data, test_data, epochs,
               f'Test Loss: {test_loss:.4f}, Duration: {dt}')
 
 
-current_user_id = 0
-custom_user_map = {}
-current_movie_id = 0
-custom_movie_map = {}
-
-
 def map_user_id(row):
     global current_user_id, custom_user_map
     old_user_id = row['user']
@@ -139,10 +139,35 @@ def map_user_id(row):
     return custom_user_map[old_user_id]
 
 
-def map_movie_id(row):
-    global current_movie_id, custom_movie_map
+def map_product_id(row):
+    global current_product_id, custom_product_map
     old_movie_id = row['product']
-    if old_movie_id not in custom_movie_map:
-        custom_movie_map[old_movie_id] = current_movie_id
-        current_movie_id += 1
-    return custom_movie_map[old_movie_id]
+    if old_movie_id not in custom_product_map:
+        custom_product_map[old_movie_id] = current_product_id
+        current_product_id += 1
+    return custom_product_map[old_movie_id]
+
+
+def write_map(m):
+    with open('./model/map.json', 'w') as f:
+        json.dump(m, f)
+
+
+def set_user_id(user_id):
+    try:
+        with open('./model/map.json') as file:
+            custom_map = json.load(file)
+
+        custom_users_map = custom_map['users']
+        print(custom_users_map)
+        if str(user_id) in custom_users_map.keys():
+            new_user_id = custom_users_map[str(user_id)]
+            return new_user_id
+        else:
+            return max(custom_map['users'].values()) + 1
+    except FileNotFoundError:
+        print('File not found')
+        return user_id
+    except ValueError:
+        print('Map file is empty')
+        return user_id

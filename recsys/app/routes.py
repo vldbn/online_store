@@ -31,7 +31,7 @@ class FitModel(object):
 
         if df is not None:
             df['new_user_id'] = df.apply(net.map_user_id, axis=1)
-            df['new_product_id'] = df.apply(net.map_movie_id, axis=1)
+            df['new_product_id'] = df.apply(net.map_product_id, axis=1)
 
             user_ids = df['new_user_id'].values
             product_ids = df['new_product_id'].values
@@ -48,8 +48,12 @@ class FitModel(object):
 
             net.fit(net.model, net.criterion, net.optimizer,
                     (train_users, train_products, train_ratings),
-                    (test_users, test_products, test_ratings), epochs=5, bs=5)
+                    (test_users, test_products, test_ratings), epochs=40)
             torch.save(net.model.state_dict(), './model/state')
+            m = {
+                'users': df.set_index('user')['new_user_id'].to_dict(),
+            }
+            net.write_map(m)
 
 
 class SignIn(object):
@@ -66,16 +70,18 @@ class SignIn(object):
             user_id = None
 
         if user_id:
+            new_user_id = net.set_user_id(user_id)
             res_products = requests.get(products_url)
             j = res_products.json()
 
             df = pd.DataFrame(j)
             df = df.astype('int64')
-            user_ids = [id for i in range(0, len(df['id']))]
+            user_ids = [user_id for i in range(0, len(df['id']))]
+            new_user_ids = [new_user_id for i in range(0, len(df['id']))]
             df.rename(columns={'id': 'product'}, inplace=True)
             df['user'] = user_ids
-            df['new_user_id'] = df.apply(net.map_user_id, axis=1)
-            df['new_product_id'] = df.apply(net.map_movie_id, axis=1)
+            df['new_user_id'] = new_user_ids
+            df['new_product_id'] = df.apply(net.map_product_id, axis=1)
 
             net.model.load_state_dict(torch.load('./model/state'))
 
@@ -90,6 +96,7 @@ class SignIn(object):
             result_dict = df.set_index('product')['result'].to_dict()
             usr_result_dict = {user_id: result_dict}
             recommendations_dict.update(usr_result_dict)
+            print(df)
         resp.status = falcon.HTTP_200
 
 
@@ -109,6 +116,7 @@ class Recommendations(object):
                 user_rec = recommendations_dict[user_id]
                 user_rec_list_sorted = sorted(user_rec,
                                               key=user_rec.get, reverse=True)
+                print(user_rec_list_sorted)
                 recommendations_list = user_rec_list_sorted[0:6]
                 d = {'recommendations': recommendations_list}
                 j = json.dumps(d)

@@ -231,3 +231,4 @@ rabbitmq/*
 redis/*
 database/*
 state
+map.json

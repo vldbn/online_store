@@ -1,3 +1,4 @@
+import json
 import torch
 from app import settings
 from model import net
@@ -11,6 +12,10 @@ def setup():
     dimension = settings.DIMENSION
     model = net.Model(n_users, n_products, dimension)
     torch.save(model.state_dict(), './model/state')
+
+    m = {"users": {}}
+    with open('./model/map.json', 'w') as f:
+        json.dump(m, f)
 
 
 if __name__ == '__main__':

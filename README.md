@@ -24,7 +24,7 @@ Online store engine built with Django, Django REST framework, Celery, RabbitMQ, 
   DJANGO_DEBUG=True
   
   EMAIL_HOST_USER=your@email.com
-  EMAIL_HOST_PASSWORD=passwordyour
+  EMAIL_HOST_PASSWORD=password
   
   RABBITMQ_HOST=rabbitmq
   RABBITMQ_DEFAULT_USER=rabbitmq_user
